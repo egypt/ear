@@ -1,0 +1,34 @@
+== Welcome to The Extensible Api for Reconnaissance (EAR) 
+
+The EAR is a rails-based project designed specifically to make it easy to discover interesting facts about organizations, users, computers, and networks. The core concepts of the EAR are the object model (implemented and database-backed with Active Record) and the tasks (implemented as ruby modules) to modify those objects. These modules are simple to create, infinitely extensible, and have just enough structure to extend the framework in useful ways. 
+
+To start, you simply create an object (for instance, an ip address, or a company name) and query for tasks which can be run on that object. The applicable tasks are then displayed to you, and you can select which one you'd like to run. 
+
+The EAR makes it easy to keep track of the source of new data, in the form of facts. These facts help you, the user, to determine the relationship and relevance of data as it is uncovered by running tasks. 
+
+== Getting The EAR
+
+The ear is currently available only by request. Ping @jcran if you'd like to give it a shot. If the project proves successful, we may migrate this to github.
+
+== Setup
+
+EAR has a significant number of external (mainly gem) dependencies, because of the varied tasks available. Many tasks have external gem dependencies to reduce the amount of code within the EAR's direct codebase.  
+
+To set up EAR, simply run the setup.sh script in the root of the application. - This will install all default gem dependencies
+
+The EAR is currently tested and working on:
+ - OS X 10.5.x+
+ - Ubuntu Linux 9.10+  
+
+== Getting Started
+
+Console Version: To get started, simply run app/script/console - this will give you access to an irb shell from which you can create objects and run tasks. 
+
+ - Creating an object: $ h = Host.create(:ip => "8.8.8.8")
+ - h.run_task("Whois")
+
+Web Access: NOT CURRENTLY IMPLEMENTED
+
+The Ear also has a few utilities which you may find of use: 
+ - gather.rb -- This utility sets up a packet sniffer on the local machine, which automatically creates Host objects within the EAR's database. These host objects are then available to you within the EAR's interface. This is a fun & easy way to find out more information about the systems your host is communicating with. 
+

@@ -1,0 +1,79 @@
+EAR
+
+
+determine if it's easy to generate a google map from ruby (via an api) - 25 min
+ - get an api key
+ - rvm install 1.9.2 (for a fresh ruby environment)
+ - gem install rails
+ - install rails 3.0?
+deal with ruby problems - 15min
+deal with rails problems - 30 min
+ - sticking w/ 2.3.8 & ruby 1.9.1 for now
+ 
+  - http://ym4r.rubyforge.org/
+ 
+determine if it's easy to generate an arbitrary point on that map
+ - it is: http://code.google.com/apis/maps/documentation/javascript/overlays.html#AddingOverlays
+ <pre>
+ 	var marker = new google.maps.Marker({
+		position: latlng,
+		title:"Hello World!"
+	});
+  
+  	// To add the marker to the map, call setMap();
+	marker.setMap(map);  
+</pre>
+
+
+figure out how to store data coming in 
+ - (models)
+  - how to access the rails models from other code
+
+determine how to get the coordinates of an ip
+
+ - to get coordinates from an address:
+	 - graticule & acts_as_geocodable
+		 - script/plugin install -x http://source.collectiveidea.com/public/rails/plugins/acts_as_geocodable
+
+
+determine how to update it in realtime
+
+determine how to handle additional variables (amount of traffic / port)
+
+determine how to hook into an
+ - ids
+ - ossec
+ - arbitrary browser connections
+
+package & make easy to install / use
+
+
+references:
+ - http://guides.rubyonrails.org/v2.3.8/
+ - http://www.killswitchcollective.com/articles/65_google_maps_on_rails
+ - YM4R: http://ym4r.rubyforge.org/
+   - 6. Don't forget to specify the layout in app/views/location_controller:
+   - Also, remember to rm public/index.html in a new rails application
+   - 12. Next add the form to the bottom of the view: <-- the layout or the location view?
+ - http://jamescrisp.blogspot.com/2006/09/rails-and-initialize-method.html
+
+
+gems
+ - ruby-whois
+ - geoipcity
+ - httparty
+ 
+
+
+follow up on: 
+ - www-delicious (http://www.simonecarletti.com/code/www-delicious/api/)
+ - http://dev.qwerly.com/docs (use httparty)
+ - linked in API
+ xmllint --format http://api.linkedin.com/v1/people-search?keywords=rapid7
+
+
+
+& first-name=[first name]& last-name=[last name]& company-name=[company name]& current-company=[true|false]& title=[title]& current-title=[true|false]& school-name=[school name]& current-school=[true|false]& country-code=[country code]& postal-code=[postal code]& distance=[miles]& start=[number]& count=[1-25]&  facet=[facet code, values]& facets=[facet codes]&  sort=[connections|recommenders|distance|relevance]
+
+
+

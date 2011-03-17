@@ -1,0 +1,23 @@
+<p>
+  <b>Ip:</b>
+  <%=h @host.ip %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%=h @host.name %>
+</p>
+<p>
+  <b>Description:</b>
+  <%=h @host.description %>
+</p>
+
+<p>
+  <b> Domains:</b>
+	<% @host.domains.each do |domain| %>
+		<a href="/domains/<%= domain.id %>"><%= domain.name %></a>	
+	<% end %>
+</p>
+
+<%= link_to 'Edit', edit_host_path(@host) %> |
+<%= link_to 'Back', hosts_path %>

@@ -1,0 +1,60 @@
+<h1>All hosts</h1>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title> Hosts </title>
+</head>
+<body>
+
+  
+<table>
+  <tr>
+    <th><%= sort_link 'IP', :ip %></th>
+    <th><%= sort_link 'Name', :name %></th>
+ 	<th>Domain</th>
+    <th>City</th>
+    <th>Region</th>
+    <th>Country</th>
+    <th><%= sort_link 'Count', :traffic_count %></th>
+  </tr>
+
+<% @hosts.each do |host| %>
+  <tr>
+    <td><%= link_to host.ip, host %></td>
+ 
+   <td><%=h host.name %></td>
+    
+    <% if host.domains.first    %>
+        <td><%= link_to host.domains.first.name, :controller => 'domains', :action => host.domains.first.id %></td>
+    <% else %>
+    	<td> No PTR </td>
+    <% end %>
+
+	<% if host.location    %>
+    	<td><%=h host.location.city %></td>
+    	<td><%=h host.location.state %></td>
+    	<td><%=h host.location.country %></td>
+	<% else %>
+	    <td> - </td>
+	    <td> - </td>
+	    <td> - </td>
+	<% end %>
+	
+    <td><%=h host.traffic_count %></td>
+    <td><%= link_to 'Map', :controller => 'maps', :action => host.id %></td>
+    <td><%= link_to 'Edit', edit_host_path(host) %></td>
+    <td><%= link_to 'Nmap', host, :confirm => 'Are you sure?', :method => :nmap %></td>
+    <td><%= link_to 'Whois', host, :confirm => 'Are you sure?', :method => :whois %></td>
+    <td><%= link_to 'Destroy', host, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New host', new_host_path %>
+
+</body>
+</html>

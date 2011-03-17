@@ -1,0 +1,42 @@
+<h1>Listing domains</h1>
+
+<table>
+  <tr>
+  </tr>
+
+<body>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Referral Whois</th>
+    <th>Referral URL</th>
+    <th>Status</th>
+    <th>Created On</th>
+    <th>Updated On</th>
+    <th>Expires On</th>
+    <th>Registrar</th>
+    <th>Nameservers</th>
+  </tr>
+
+<% @domains.each do |domain| %>
+  <tr>
+    <td><%=h domain.name %></td>
+    <td><%=h domain.referral_whois %></td>
+    <td><%=h domain.referral_url %></td>
+    <td><%=h domain.status %></td>
+    <td><%=h domain.created_on %></td>
+    <td><%=h domain.updated_on %></td>
+    <td><%=h domain.expires_on %></td>
+    <td><%=h domain.registrar %></td>
+    <td><%=h domain.nameservers %></td>
+    <td><%= link_to 'Show', domain %></td>
+    <td><%= link_to 'Edit', edit_domain_path(domain) %></td>
+    <td><%= link_to 'Destroy', domain, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New domain', new_domain_path %>

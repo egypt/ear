@@ -1,0 +1,79 @@
+<p>
+  <b>Name:</b>
+  <%=h @domain.name %>
+</p>
+
+<p>
+  <b>Referral Whois:</b>
+  <%=h @domain.referral_whois %>
+</p>
+
+<p>
+  <b>Referral Url:</b>
+  <%=h @domain.referral_url %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%=h @domain.status %>
+</p>
+
+<p>
+  <b>Created On:</b>
+  <%=h @domain.created_on %>
+</p>
+
+<p>
+  <b>Updated On:</b>
+  <%=h @domain.updated_on %>
+</p>
+
+<p>
+  <b>Expires On:</b>
+  <%=h @domain.expires_on %>
+</p>
+
+<p>
+  <b>Registrar:</b>
+  <%=h @domain.registrar %>
+</p>
+
+<p>
+  <b>Nameservers:</b>
+  <%=h @domain.nameservers %>
+</p>
+
+<p>
+  <b>Registered:</b>
+  <%=h @domain.registered %>
+</p>
+
+<p>
+  <b>Available:</b>
+  <%=h @domain.available %>
+</p>
+
+<p>
+  <b>Registrant_Contact:</b>
+  <%=h @domain.registrant_contact %>
+</p>
+
+<p>
+  <b>Admin_Contact:</b>
+  <%=h @domain.admin_contact %>
+</p>
+
+<p>
+  <b>Technical Contact:</b>
+  <%=h @domain.technical_contact %>
+</p>
+
+<p>
+  <b>Full Text:</b>
+<pre>
+  <%=h @domain.fulltext %>
+</pre>
+</p>
+
+<%= link_to 'Edit', edit_domain_path(@domain) %> |
+<%= link_to 'Back', domains_path %>

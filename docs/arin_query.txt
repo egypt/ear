@@ -1,0 +1,42 @@
+
+
+Searching - Here is the list of resources and their supported parameters:
+
+    * /orgs
+          o handle - the handle of the organization
+          o name - the name of organization
+          o dba - the name the organization does business as
+    * /customers
+          o handle - the handle of the customer
+          o name - the name of the customer
+    * /pocs
+          o handle - the handle of the POC
+          o domain - the domain of the email address for the POC
+          o first - the first name of the POC
+          o middle - the middle name of the POC
+          o last - the last name of the POC
+          o company - the company name registered by the POC
+          o city - the city registered by the POC
+    * /asns
+          o handle - the handle of the ASN
+          o name - the name of the ASN
+          
+showDetails=true <-- returns more info in the XML
+
+Here is the list of relationships (where "XXXX" signifies a handle):
+
+    * /poc/XXXX
+          o /orgs ==> /poc/XXXX/orgs - lists the organizations associated with a given POC.
+          o /asns ==> /poc/XXXX/asns - lists the ASNs associated with a given POC.
+          o /nets ==> /poc/XXXX/nets - lists the networks associated with a given POC.
+    * /org/XXXX
+          o /pocs ==> /org/XXXX/pocs - lists the POCs associate with a given organization.
+          o /asns ==> /org/XXXX/asns - lists the ASNs associated with a given organization.
+          o /nets ==> /org/XXXX/nets - lists the networks associated with a given organization.
+    * /asn/XXXX
+          o /pocs ==> /asn/XXXX/pocs - lists the POCs associated with a given ASN.
+    * /net/XXXX
+          o /pocs ==> /net/XXXX/pocs - lists the POCs associated with a given network.
+          o /parent ==> /net/XXXX/parent - lists the parent network of a given network.
+          o /children ==> /net/XXXX/children - lists the child networks of a given network.
+

@@ -1,0 +1,12 @@
+<h1>Editing network</h1>
+
+<% form_for(@network) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @network %> |
+<%= link_to 'Back', networks_path %>
