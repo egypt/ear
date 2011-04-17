@@ -1,7 +1,7 @@
 require 'rex'
 
 	def name
-		"RangeWalker"
+		"rangewalker"
 	end
 
 	## Returns a string which describes what this task does
@@ -11,17 +11,17 @@ require 'rex'
 
 	## Returns an array of valid types for this task
 	def allowed_types
-		[Network]
+		[]
 	end
 	
-	## Returns a--forhon arry of types that it will update
+	## Returns an array of types that it will update
 	def update_types
 		[]
 	end
 
 	## Returns an array of types that the task will create
 	def create_types
-		[Host]
+		[Device]
 	end
 
 	def setup(object, options={})
@@ -33,9 +33,13 @@ require 'rex'
 	def run
 		super
 	
-		walker = Rex::Socket::RangeWalker.new(@object.range)
-		walker.each { |ip|
-			create_object Host, { 	:ip => ip,
-						:network_id => @object.id }
-		}
+		walker = Rex::Socket::RangeWalker.new(@object)
+		walker.each { |ip| Device.create(:ip_address => ip)}
+	
+	nil
 	end
+
+  def cleanup
+    
+  end
+  

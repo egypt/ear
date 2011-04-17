@@ -22,6 +22,10 @@ The EAR is currently tested and working on:
 
 == Getting Started
 
+You'll need to configure a database (it's a rails app, after all) before you can use the app. Do this in ear/config/database.yml - Sqlite is fine for small databases. Use Postgres (homebrew makes this easy on OSX) or MySQL for anything of a decent size. 
+
+$rake db:migrate
+
 Console Version: To get started, simply run app/script/console - this will give you access to an irb shell from which you can create objects and run tasks. 
 
  - Creating an object: $ h = Host.create(:ip => "8.8.8.8")

@@ -1,14 +1,14 @@
 class Map
  
-	def map_all_hosts
+	def map_all_devices
 		self.setup_map
 		
-	  hosts = Host.all.each {|host|
+	  device = Device.all.each {|device|
       if host.location
-			  generate_host_marker(host)
+			  generate_device_marker(host)
 			else
 			  host.locate
-			  generate_host_marker(host)
+			  generate_device_marker(host)
 			end
 		}
 		
@@ -18,15 +18,14 @@ class Map
   def map_single_host(id)
 		self.setup_map
     
-		host = Host.find(id)
-		if host.location
-		  generate_host_marker(host)
+		device = Device.find(id)
+		if device.location
+		  generate_device_marker(host)
 		end
 		
 		return @map
   end
-  	
-  	
+    	
 protected 
 
  	def setup_map
@@ -36,16 +35,16 @@ protected
 		@map.center_zoom_init([0,0],2)
  	end
  
-	def generate_host_marker(host)
-	  if host.location
+	def generate_device_marker(device)
+	  if device.location
 		  @map.overlay_init(GMarker.new(
 			  [host.location.longitude, host.location.latitude], 
 			  :title => host.ip, 
-			  :info_window => "Hostname: #{host.name} <br/>" +
-					  "IP: #{host.ip} <br/>" +
-					  "City: #{host.location.city} <br/>" + 
-					  "# Packets: #{host.traffic_count} <br/>" + 
-					  "<a href=\"/hosts/#{host.id}\">view</a>" )) 
+			  :info_window => "Hostname: #{device.name} <br/>" +
+					              "IP: #{device.ip} <br/>" +
+					              "City: #{device.location.city} <br/>" + 
+					              "# Packets: #{device.traffic_count} <br/>" + 
+					              "<a href=\"/hosts/#{device.id}\">view</a>" )) 
 		end
 	end 
 end

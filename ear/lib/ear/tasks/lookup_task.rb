@@ -11,17 +11,17 @@
 
 	## Returns an array of valid types for this task
 	def allowed_types
-		[Host, Domain]
+		[Device, Domain]
 	end
 	
 	## Returns an arry of types that it will update
 	def update_types
-		[Host]
+		[Device]
 	end
 
 	## Returns an array of types that the task will create
 	def create_types
-		[Host]
+		[Device]
 	end
 
 	def setup(object, options={})
@@ -33,21 +33,17 @@
 	def run
 		super
 
-	begin
-
-			if @object.kind_of?(Host)
-			
+	  begin
+			if @object.kind_of?(Device)
 				if @object.name
 					begin
 						resolved_address = Resolv.new.getaddress(@object.name)
-						puts "Resolved ip: #{resolved_address}"
 						@object.name = resolved_address
-
-					rescue
-						puts "No address found."
+					rescue Exception => e
+					  puts e
 					end
 				else
-					puts "Error, object has no name to look up! Try a reverse lookup!"
+					raise "Error, object has no name to look up! Try a reverse lookup!"
 				end
 
 				## Attach Mail Servers?
@@ -59,19 +55,18 @@
 					if @object.name
 						begin
 							resolved_address = Resolv.getaddress(@object.name)
-							puts "Resolved ip: #{resolved_address}"
-							h = create_object Host, { :ip => resolved_address }
+							h = create_object Device, { :ip_address => resolved_address }
 							h.domains << @object
 						rescue Exception => e
-							puts e
+						  puts e
 						end
-
 					else
-						puts "Error, object has no name to look up! Try a reverse lookup!"
+						raise "Error, object has no name to look up! Try a reverse lookup!"
 					end
 				rescue 
 					return
 				end
+				
 			end
 			
 		rescue Exception => e
@@ -81,4 +76,5 @@
 	
 		
 		@object.save!
+    nil
 	end

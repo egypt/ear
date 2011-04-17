@@ -11,12 +11,12 @@
 
 	## Returns an array of valid types for this task
 	def allowed_types
-		[Host]
+		[Device]
 	end
 	
 	## Returns an arry of types that it will update
 	def update_types
-		[Host]
+		[Device]
 	end
 
 	## Returns an array of types that the task will create
@@ -41,5 +41,6 @@
 		## Modify the object?
 		
 		@object.save!
+		nil
 	end
 

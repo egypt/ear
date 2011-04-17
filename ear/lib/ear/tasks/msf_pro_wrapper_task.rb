@@ -6,7 +6,7 @@
 
 	## Returns an array of valid types for this task
 	def allowed_types
-		[Host, Network, User]
+		[Device, EmailAddress]
 	end
 	
 	## Returns an arry of types that it will update
@@ -83,6 +83,7 @@
 		end
 
 		@object.save!
+		nil
 	end
 	
 	def cleanup

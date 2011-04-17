@@ -9,9 +9,10 @@ class ObjectManager
 	end
 
 	def find_children(id, type)
-		all_mapped_children = ObjectMapping.find(:all, 
-					:conditions => { :parent_id => id,
-							 :parent_type => type})
+		all_mapped_children = ObjectMapping.find(
+		            :all, 
+					      :conditions => {  :parent_id => id,
+							                    :parent_type => type})
 		
 		children = []
 		
@@ -28,9 +29,10 @@ class ObjectManager
 	end
 	
 	def find_parents(id, type)
-		all_mapped_parents = ObjectMapping.find(:all, 
-					:conditions => { :child_id => id,
-							 :child_type => type})
+		all_mapped_parents = ObjectMapping.find(
+		                  :all, 
+					            :conditions => {  :child_id => id,
+							                          :child_type => type})
 		
 		parents = []
 		if all_mapped_parents.kind_of? ObjectMapping
@@ -46,18 +48,18 @@ class ObjectManager
 
 	def objects
 		all = []
-		all = all | Service.find(:all)
-		all = all | Host.find(:all)
-		all = all | Network.find(:all)
-		all = all | Domain.find(:all)
-		all = all | User.find(:all)
-		all = all | Organization.find(:all)
+		all = all | User.all
+		all = all | EmailAddress.all
+		all = all | Organization.all
+    all = all | Domain.all
+    all = all | Device.all
+		all = all | Service.all
+    all = all | NetApplication.all
+    all = all | WebApplication.all
+    all = all | Location.all
 		return all
 	end
 
-	def create_host(ip)
-	  Host.create :ip => ip
-	end
 
 end
 

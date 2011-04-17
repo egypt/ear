@@ -22,18 +22,12 @@ class TaskManager
 			end
 		end
 		
-		#puts "Task Files: " + @task_files.inspect
-		
 		@@task_files.each do |task_file|
 			task_data=[]
 			
-			#puts "grabbing " + task_file
-			
 			File.open(task_file, "r").each { |line|	task_data << line }
 			
-			#puts "text: " + task_data.inspect
-			
-			t = Task.new
+ 		  t = Task.new
 			t.instance_eval(task_data.join("\n"))
 			@@tasks << t
 		end
@@ -62,7 +56,7 @@ class TaskManager
 	def run_task(name, object, options={})
 		## TODO - multithread
 				
-		puts "Task manager running task #{name}"
+		puts "Task manager running task: #{name}"
 		puts "Object: #{object}"
 		puts "Options: #{options}"
 		

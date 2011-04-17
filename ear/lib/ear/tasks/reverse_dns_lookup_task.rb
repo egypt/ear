@@ -1,7 +1,7 @@
 require 'resolv'
 
 	def name
-		"ReverseDNS"
+		"reverse_lookup"
 	end
 
 	def description
@@ -10,12 +10,12 @@ require 'resolv'
 
 	## Returns an array of valid types for this task
 	def allowed_types
-		[Host]
+		[Device]
 	end
 	
 	## Returns an arry of types that it will update
 	def update_types
-		[Host]
+		[Device]
 	end
 
 	## Returns an array of types that the task will create
@@ -30,29 +30,29 @@ require 'resolv'
 
 	def run
 		begin
-			name = Resolv.new.getname(@object.ip).to_s
+			name = Resolv.new.getname(@object.ip_address).to_s
 
 			if name
-				@object.name = name 
-				@object.add_fact("Resolved name: #{name}") 
-			
-		  		## find out if we already know about this domain
+				@object.name = name 			
+		  	
+		  	## find out if we already know about this domain
 				existing_domain = Domain.find_by_name(@object.domain_string)
 			
 				if existing_domain
 					if !@object.domains.exists?(existing_domain) ## already attached?
-						@object.domains << existing_domain
-						existing_domain.add_fact("Added from reverse lookup on #{@object.name}")
+            create_object Domain, { :name => name }
 					end
 				else	## we didn't know it, create it
-					d = @object.domains.create(:name => @object.domain_string)
-					d.add_fact("Created from reverse lookup on #{@object.name}")
+					create_object Domain, {:name => name}
 				end
+			else
+			  raise "Sorry, couldn't find a name."
 			end
 		rescue
-			
+		
 		end
 		
 		@object.save!
-
+		
+    nil
 	end

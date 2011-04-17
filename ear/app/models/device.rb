@@ -1,19 +1,23 @@
 require File.dirname(__FILE__) + '/model_helper'
 require 'iconv'
 
-class Host < ActiveRecord::Base
-	belongs_to :network
-	belongs_to :location
-	has_one    :organization, :through => :network
-	has_many   :users, :through => :organization
-	has_many   :domains
-	has_many   :services
-	has_many   :object_mappings
+class Device < ActiveRecord::Base
+	has_many :object_mappings
+	#after_create :after_create
 
-	after_create :after_create
+	belongs_to  :organization
+	has_one     :location
+	has_many    :services
+	#has_many    :domains, :through => organization
 
-	validates_uniqueness_of :ip
-	validates_presence_of :ip
+  validates_presence_of :ip_address
+  validates_uniqueness_of :ip_address
+  validates_uniqueness_of :mac_address
+
+	#has_many    :users, :through => :organization
+	#has_many    :domains, :through => :organization
+  #has_many    :applications, :through => service
+  #has_many     :web_applications, :through => service
 
 	include ModelHelper
 
@@ -32,8 +36,8 @@ class Host < ActiveRecord::Base
     self.run_task("lookup")
   end
 
-  def locate
-    self.run_task("Geolocate")
+  def geolocate_ip
+    self.run_task("geolocate_ip")
   end
 
   def command(command_string)
@@ -45,19 +49,16 @@ class Host < ActiveRecord::Base
   end
   
   def msf_module(mod, options)
-  	
   	msf_options = options
   	msf_options.merge({:module => mod})
-	self.run_task("msf", msf_options )
+	  self.run_task("msf", msf_options )
   end
 
   def msf_pro_task(task, options)
-  	
   	msf_options = options
   	msf_options.merge({:task => task})
-	self.run_task("msf_pro", msf_options )
+	  self.run_task("msf_pro", msf_options )
   end
-  
   
   def whois
     self.run_task("Whois")
@@ -66,5 +67,9 @@ class Host < ActiveRecord::Base
   def example
     self.run_task("Example")
   end
+  
+	def to_s
+	  "#{self.class}: #{self.ip_address} (#{self.name})"
+	end
 
 end

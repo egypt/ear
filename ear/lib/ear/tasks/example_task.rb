@@ -1,5 +1,5 @@
 	def name
-		"Example"
+		"example"
 	end
 
 	## Returns a string which describes what this task does
@@ -9,7 +9,7 @@
 
 	## Returns an array of valid types for this task
 	def allowed_types
-		[Host, Domain, Network, Organization, User, Location, Service]
+		return [EmailAddress, Device, Domain, Organization, User, Location, Service, NetApplication, WebApplication]
 	end
 	
 	## Returns an arry of types that it will update
@@ -25,22 +25,16 @@
 	def setup(object, options={})
 		super(object, options)
 	  puts "Example Task Setup Called"
-		puts "Task Object: #{@object}"	
-		puts "Options: #{@options}"	
 		self
 	end
 
 	## Default method, subclasses must override this
 	def run
-	  	super
-    
+	  super
 		puts "Example Task Run Called"
-		puts "Object: #{@object}"
-		puts "Task Run: #{@task_run.inspect}"
-	
 		ip = "#{rand(100)}.#{rand(100)}.#{rand(100)}.#{rand(100)}"
-		x = create_object Host, { :ip => ip }
-		
+		x = create_object Device, { :ip_address => ip }
+		nil
 	end
 	
 	def cleanup

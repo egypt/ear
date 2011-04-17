@@ -1,27 +1,27 @@
 require 'whois'
+require 'rex'
 
 	def name
-		"Whois"
+		"whois"
 	end
 
 	## Returns a string which describes what this task does
 	def description
 		"Performs a whois & updates the database"
 	end
-
-
+	
 	## Returns an array of valid types for this task
 	def allowed_types
-		[Domain,Host]
+		[Domain,Device]
 	end
 	
 	def update_types
-		[Domain,Host]
+		[Domain,Device]
 	end
 
 	## Creates these types
 	def create_types
-		[Domain,Network,Host,Organization]
+		[Domain,Device,Organization]
 	end
 
 	def setup(object, options={})
@@ -33,8 +33,7 @@ require 'whois'
 	## Default method, subclasses must override this
 	def run
 		begin
-
-			if @object.kind_of?(Host)
+			if @object.kind_of?(Device)
 				answer = @client.query(@object.ip)
 				split_answer = answer.to_s.split("\n")			
 				
@@ -43,15 +42,19 @@ require 'whois'
 					## Attach Netrange
 					if line =~ /CIDR/
 						cidr = line
-						n = Network.create(:range => cidr.split(" ").last)
-						n.add_fact("Created from a whois lookup on: " + @object.ip + "(" + cidr + ")")	
+						#n = Network.create(:range => cidr.split(" ").last)
+						#n.add_fact("Created from a whois lookup on: " + @object.ip + "(" + cidr + ")")	
+						
+            walker = Rex::Socket::RangeWalker.new(line)
+        		walker.each { |ip| Device.create(:ip_address => ip)}
+					  
 					end
 				
 					## Attach Nameserver
 					if line =~ /NameServer/
 						nameserver = line
-						h = Host.create(:name => nameserver.split(" ").last)
-						h.add_fact("Created from a whois lookup on: " + @object.ip + "(" + nameserver + ")")	
+						h = Device.create(:name => nameserver.split(" ").last)
+						#h.add_fact("Created from a whois lookup on: " + @object.ip + "(" + nameserver + ")")	
 						h.lookup
 					end
 
@@ -92,6 +95,8 @@ require 'whois'
 		end
 		
 		@object.save!
+		
+		nil
 	end
 
 	def valid?

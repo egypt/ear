@@ -27,7 +27,6 @@ class Task
 		"Doesn't do anything!"
 	end
 
-
 	## Returns an array of valid types for this task
 	def allowed_types
 		[]
@@ -45,27 +44,25 @@ class Task
 	
 	## Where the pre-run setup happens, 
 	def setup(object, options={})	
-		puts "Task Setup Called"
-		puts "Task Object: #{object}"	
-		puts "Options: #{options}"	
-
-		raise(ArgumentError,"Bad Type", caller)	unless allowed_types.include? object.class
-
+	  #puts "Task Setup Called!"
+	  #puts "Object class: #{object.class}"
+		raise "Exception"	unless allowed_types.include?(object.class)
 		@object = object
 		@options = options
 	end
 	
 	## magic happens here
 	def run
-		puts "Task Run Called"
-		@task_run = TaskRun.create( 	:task_name => name, 
+	  #puts "Task Run Called!"
+		@task_run = TaskRun.create( 	
+		        :task_name => name, 
 					 	:task_object_type => @object.class.to_s,
 					 	:task_object_id => @object.id, 
 					 	:task_options_hash => @options )
 	end
 	
 	def cleanup
-		puts "Task Cleanup Called"
+	  #puts "Task Cleanup Called!"
 	end
 	
 	## Checks for validity, subclasses can override if they'd like
@@ -81,17 +78,12 @@ class Task
 	## objects from within a task. designed to simplify the 
 	## task api. do not override.
 	def create_object(type, params)
-		
-		puts "Create object called."
-		
 		## TODO - check for dupes here
-		
+		#puts "TODO - implement check for dupes!"
 		## Call the create method for this type
 		x = type.send(:create, params)
-		
 		## Keep track of the information that created this object
-		x.map_relationship({ :parent => @object, :task_run => @task_run})
-		
+		x.map_parent({ :parent => @object, :task_run_id => @task_run.id})
 		return x 
 	end
 end

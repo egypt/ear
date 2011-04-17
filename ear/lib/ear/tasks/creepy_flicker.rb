@@ -1,25 +1,28 @@
+require 'flickr'
+require 'exifr'
+
 def name
-	"nmap"
+	"creepy_flickr"
 end
 
 ## Returns a string which describes what this task does
 def description
-	"This task runs nmap on a host."
+	"This task checks flickr for user checkins"
 end
 
 ## Returns an array of valid types for this task
 def allowed_types
-	[Device]
+	return [User]
 end
 
 ## Returns an arry of types that it will update
 def update_types
-	[Device]
+	[]
 end
 
 ## Returns an array of types that the task will create
 def create_types
-	[]
+	[Location]
 end
 
 def setup(object, options={})
@@ -30,15 +33,12 @@ end
 ## Default method, subclasses must override this
 def run
   super
-  ## parse it here - update the host
-  require 'nmap/parser'
-  system("nmap -PN -sT -oX /tmp/#{@object.ip}_nmap #{@object.ip}")
-  parser = Nmap::Parser.parsefile("/tmp/#{@object.ip}_nmap")
-	
-	## Create the services
-	
-	## Update the host here
-	nil
+  
+  raise Exception "pending"
+  
+	x = create_object Location, { :longitude => longitude, :latitude => latitude }
+
+nil
 end
 
 def cleanup
