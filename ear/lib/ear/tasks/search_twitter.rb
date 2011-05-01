@@ -1,20 +1,20 @@
 def name
-	"nmap_full"
+	"search_twitter"
 end
 
 ## Returns a string which describes what this task does
 def description
-	"This task runs nmap on a host."
+	"Search twitter for this username."
 end
 
 ## Returns an array of valid types for this task
 def allowed_types
-	[Device]
+	return [User]
 end
 
 ## Returns an arry of types that it will update
 def update_types
-	[Device]
+	[User]
 end
 
 ## Returns an array of types that the task will create
@@ -30,19 +30,23 @@ end
 ## Default method, subclasses must override this
 def run
   super
-  ## parse it here - update the host
-  require 'nmap/parser'
-  system("nmap -PN -sT -p1-65535 -oX /tmp/#{@object.ip_address}_nmap #{@object.ip_address}")
-  parser = Nmap::Parser.parsefile("/tmp/#{@object.ip_address}_nmap")
-	
-	## Create the services
-	
-	## Update the host here
+  require 'twitter'
 
+  # Initialize a Twitter search
+  search = Twitter::Search.new
 
-nil
+  search.containing("#{@object.fname} #{@object.lname}").result_type("recent").per_page(10).each do |r|
+    #puts "#{r.from_user}: #{r.text}"
+    Fact.create :user_id => @object.id, :text => "#{r.from_user}: #{r.text}"
+  end
+
+  # Enough about
+  search.clear
+
+	nil
 end
 
 def cleanup
 	super
+	puts ""
 end

@@ -31,15 +31,18 @@ end
 def run
   super
   
-  require 'hpricot'
+  require 'nokogiri'
   require 'open-uri'
   require 'cgi'
   
-  # Get page URI
-   uri = 'http://www.hoovers.com/company/Rapid7_LLC/xsxsfjxf-1.html'
+  # Search URI
+  search_uri = "http://www.hoovers.com/search/company-search-results/100005142-1.html?type=company&term=#{@object.name}"
+  doc = Nokogiri::HTML(open(search_uri))
+  company_path = doc.xpath("//*[@class='company_name']").first.children.first['href']
+  company_uri = "http://www.hoovers.com#{company_path}"
   
   # Open Page & Parse
-   doc = Hpricot(open(uri))
+   doc = Nokogiri::HTML(open(company_uri))
    
   # Get Address & Clean up
   address = (doc/"/html/body/div[3]/div[2]/table/tbody/tr/td/strong/span").inner_html
@@ -47,13 +50,16 @@ def run
     
   # Get Users
   user = (doc/"/html/body/div[3]/div[2]/div[9]/table/tbody/tr/td").inner_html
-  names = user.gsub("a href=\"/marketing/free-trial/100004836-1.html\" title=\"Email lists, email contacts, contact phone numbers, email leads, phone leads\" relatedarticles=\"false\" id=\"100004836\">E-mail</a>","").split("<")
-  puts "Got Users: #{names.join(" ")}"
+
+  unless user.blank?
+    names = user.gsub("a href=\"/marketing/free-trial/100004836-1.html\" title=\"Email lists, email contacts, contact phone numbers, email leads, phone leads\" relatedarticles=\"false\" id=\"100004836\">E-mail</a>","").split("<") 
+    puts "Got Users: #{names.join(" ")}"
   
-  names.each do |name| 
-    name.gsub!("&nbsp;"," ")
-    fname,lname = name.split(" ")
-    create_object User, { :fname => fname, :lname => lname }
+    names.each do |name| 
+      name.gsub!("&nbsp;"," ")
+      fname,lname = name.split(" ")
+      create_object User, { :fname => fname, :lname => lname }
+    end
   end
   
 	nil

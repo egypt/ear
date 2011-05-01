@@ -32,8 +32,8 @@ def run
   super
   ## parse it here - update the host
   require 'nmap/parser'
-  system("nmap -PN -sT -oX /tmp/#{@object.ip}_nmap #{@object.ip}")
-  parser = Nmap::Parser.parsefile("/tmp/#{@object.ip}_nmap")
+  system("nmap -PN -sT -oX /tmp/#{@object.ip_address}_nmap #{@object.ip_address}")
+  parser = Nmap::Parser.parsefile("/tmp/#{@object.ip_address}_nmap")
 	
 	## Create the services
 	

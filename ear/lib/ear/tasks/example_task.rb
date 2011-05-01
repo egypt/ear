@@ -19,7 +19,7 @@
 
 	## Returns an array of types that the task will create
 	def create_types
-		[Host]
+		[Device]
 	end
 
 	def setup(object, options={})

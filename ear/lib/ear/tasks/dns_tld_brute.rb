@@ -58,9 +58,9 @@ def run
             puts "Resolved Address: #{resolved_address}"
             create_object Device, :ip_address => resolved_address, 
                                   :name => domain, 
-                                  :organization_id => @object.id
+                                  :organization => @object
             create_object Domain, :name => domain, 
-                                  :organization_id => @object.id
+                                  :organization => @object
           end
           
     	  rescue Exception => e

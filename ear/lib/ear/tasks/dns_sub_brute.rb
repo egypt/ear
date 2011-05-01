@@ -55,13 +55,12 @@ def run
 					resolved_address = Resolv.new.getaddress(domain)
 
 					if resolved_address
-            create_object Domain, :name => domain, 
-                                  :organization_id => @object.organization.id
+            create_object Domain, {:name => domain, 
+                                  :organization_id => @object.organization.id}
 
-            create_object Device, :ip_address => resolved_address, 
-                                  :name => domain, 
-                                  #:domain_id => @object.id, 
-                                  :organization_id => @object.organization.id
+            create_object Device, {:ip_address => resolved_address,
+                                  :name => domain,
+                                  :organization_id => @object.organization.id}
           end
 
     	  rescue Exception => e
