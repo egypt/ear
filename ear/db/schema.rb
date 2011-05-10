@@ -11,8 +11,20 @@
 
 ActiveRecord::Schema.define(:version => 20101127000000) do
 
+  create_table "devices", :force => true do |t|
+    t.integer  "traffic_count",   :default => 1
+    t.string   "mac_address"
+    t.string   "ip_address"
+    t.string   "name"
+    t.text     "description"
+    t.string   "function"
+    t.integer  "organization_id"
+    t.integer  "location_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "domains", :force => true do |t|
-    t.integer  "host_id"
     t.string   "name"
     t.text     "description"
     t.string   "referral_whois"
@@ -35,13 +47,23 @@ ActiveRecord::Schema.define(:version => 20101127000000) do
     t.datetime "updated_at"
   end
 
-  create_table "hosts", :force => true do |t|
-    t.string   "ip"
-    t.string   "name"
-    t.text     "description"
-    t.integer  "traffic_count", :default => 1
+  create_table "email_addresses", :force => true do |t|
+    t.string  "address"
+    t.integer "user_id"
+  end
+
+  create_table "facts", :force => true do |t|
+    t.text     "text"
+    t.integer  "user_id"
+    t.integer  "email_address_id"
+    t.integer  "organization_id"
     t.integer  "location_id"
-    t.integer  "network_id"
+    t.integer  "domain_id"
+    t.integer  "device_id"
+    t.integer  "device_address_id"
+    t.integer  "service_id"
+    t.integer  "application_id"
+    t.integer  "web_application_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -49,18 +71,22 @@ ActiveRecord::Schema.define(:version => 20101127000000) do
   create_table "locations", :force => true do |t|
     t.float    "latitude"
     t.float    "longitude"
+    t.string   "address"
     t.string   "city"
     t.string   "state"
     t.string   "zip"
     t.string   "country"
+    t.integer  "user_id"
+    t.integer  "organization_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "networks", :force => true do |t|
-    t.text     "description"
-    t.string   "range"
-    t.integer  "organization_id"
+  create_table "net_applications", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.string   "version"
+    t.integer  "service_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -78,7 +104,7 @@ ActiveRecord::Schema.define(:version => 20101127000000) do
     t.string   "name"
     t.text     "description"
     t.string   "address"
-    t.integer  "location_id"
+    t.string   "email_mask"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -87,8 +113,8 @@ ActiveRecord::Schema.define(:version => 20101127000000) do
     t.string   "name"
     t.text     "description"
     t.string   "type"
-    t.string   "address"
-    t.integer  "host_id"
+    t.integer  "port"
+    t.integer  "device_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -113,10 +139,17 @@ ActiveRecord::Schema.define(:version => 20101127000000) do
     t.string   "fname"
     t.string   "lname"
     t.string   "alias"
-    t.string   "mask"
-    t.string   "email"
     t.integer  "organization_id"
-    t.integer  "location_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "web_applications", :force => true do |t|
+    t.string   "name"
+    t.string   "uri"
+    t.string   "description"
+    t.string   "version"
+    t.integer  "service_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

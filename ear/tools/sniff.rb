@@ -47,18 +47,18 @@ require 'packetfu' # Line 1, require PacketFu.
 	included = true
 	next unless included && !excluded && packet.is_ip?
 	
-	## Check to see if we have the host's details already
-    	host = Host.find_by_ip(packet.ip_daddr)
+	## Check to see if we have the device's details already
+    	device = device.find_by_ip(packet.ip_daddr)
 	
-	if host
-		puts "Already looked #{host.ip} up, incrementing traffic count..."
-		host.traffic_count = host.traffic_count + 1
-		host.save!
+	if device
+		puts "Already looked #{device.ip} up, incrementing traffic count..."
+		device.traffic_count = device.traffic_count + 1
+		device.save!
 		next
 	end
-	puts "New host: #{packet.ip_daddr}, creating a record..."
-	## If we got here, we haven't seen it before. create the host record.
-	Host.create( :ip => packet.ip_daddr )
+	puts "New device: #{packet.ip_daddr}, creating a record..."
+	## If we got here, we haven't seen it before. create the device record.
+	device.create( :ip => packet.ip_daddr )
 #  rescue
 #	  puts "Something unexpected happened while parsing the packet."
 #	  next

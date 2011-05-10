@@ -7,8 +7,10 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users
   map.resources :networks
   map.resources :domains
-  map.resources :hosts
+  map.resources :devices
   map.resources :services
+  map.resources :net_applications
+  map.resources :web_applications
   map.resources :maps
 
   map.root :controller => "home"
