@@ -5,8 +5,8 @@ class Domain < ActiveRecord::Base
 	#after_create :after_create	
 	belongs_to :organization
 	
-	validates_presence_of :name
-	validates_uniqueness_of :name
+	#validates_presence_of :name
+	#validates_uniqueness_of :name
 	
 	include ModelHelper
 	

@@ -46,7 +46,7 @@ class Task
 	def setup(object, options={})	
 	  #puts "Task Setup Called!"
 	  #puts "Object class: #{object.class}"
-		raise "Exception"	unless allowed_types.include?(object.class)
+		raise "Sorry dude, no tasks like that here...."	unless allowed_types.include?(object.class)
 		@object = object
 		@options = options
 	end
@@ -81,7 +81,13 @@ class Task
 		## TODO - check for dupes here
 		#puts "TODO - implement check for dupes!"
 		## Call the create method for this type
-		x = type.send(:create, params)
+		
+		#puts "DEBUG: Creating: #{type}"
+		#puts "DEBUG: Params: #{params}"
+		
+		x = type.send(:create!, params)
+		
+		#puts "DEBUG: #{x}"
 		## Keep track of the information that created this object
 		x.map_parent({ :parent => @object, :task_run_id => @task_run.id})
 		return x 

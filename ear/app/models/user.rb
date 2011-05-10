@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
 
 	belongs_to :organization
 
-  validates_presence_of :fname, :lname
+  #validates_presence_of :fname, :lname
 
 	include ModelHelper
 

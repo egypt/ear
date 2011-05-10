@@ -6,7 +6,6 @@ class Organization < ActiveRecord::Base
 
   has_many :locations
 	has_many :domains
-	has_many :networks
 	has_many :users
 	has_many :devices	
 	

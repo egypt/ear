@@ -4,11 +4,11 @@ class Map
 		self.setup_map
 		
 	  device = Device.all.each {|device|
-      if host.location
-			  generate_device_marker(host)
+      if device.location
+			  generate_device_marker(device)
 			else
-			  host.locate
-			  generate_device_marker(host)
+			  device.locate
+			  generate_device_marker(device)
 			end
 		}
 		
@@ -20,7 +20,7 @@ class Map
     
 		device = Device.find(id)
 		if device.location
-		  generate_device_marker(host)
+		  generate_device_marker(device)
 		end
 		
 		return @map

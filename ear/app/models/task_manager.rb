@@ -14,10 +14,19 @@ class TaskManager
 		@@tasks = []
 		#@running_tasks = []
 	
-		Dir.entries(@@tasks_dir).each do |entry| 
+	  load_tasks(@@tasks_dir)
+	end
+	
+	def reload_tasks(dir=@@tasks_dir)
+	  @@task_files = []
+	  load_tasks(dir)
+	end
+	
+	def load_tasks(dir=@@tasks_dir)
+	  Dir.entries(dir).each do |entry| 
 			if !(entry =~ /^\./) ## check for obvious directories
-				if File.file? @@tasks_dir + "/" + entry ## make sure it's a file
-					@@task_files.push @@tasks_dir + "/" + entry 
+				if File.file? dir + "/" + entry ## make sure it's a file
+					@@task_files.push dir + "/" + entry 
 				end
 			end
 		end
@@ -56,9 +65,9 @@ class TaskManager
 	def run_task(name, object, options={})
 		## TODO - multithread
 				
-		puts "Task manager running task: #{name}"
-		puts "Object: #{object}"
-		puts "Options: #{options}"
+		#puts "Task manager running task: #{name}"
+		#puts "Object: #{object}"
+		#puts "Options: #{options}"
 		
 		## TODO - catch invalid tasks here!
 		

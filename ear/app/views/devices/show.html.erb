@@ -1,0 +1,23 @@
+<p>
+  <b>Ip:</b>
+  <%=h @device.ip %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%=h @device.name %>
+</p>
+<p>
+  <b>Description:</b>
+  <%=h @device.description %>
+</p>
+
+<p>
+  <b> Domains:</b>
+	<% @device.domains.each do |domain| %>
+		<a href="/domains/<%= domain.id %>"><%= domain.name %></a>	
+	<% end %>
+</p>
+
+<%= link_to 'Edit', edit_device_path(@device) %> |
+<%= link_to 'Back', devices_path %>

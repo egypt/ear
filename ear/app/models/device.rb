@@ -8,16 +8,15 @@ class Device < ActiveRecord::Base
 	belongs_to  :organization
 	has_one     :location
 	has_many    :services
-	#has_many    :domains, :through => organization
+#	has_many    :domains, :through => organization
 
   validates_presence_of :ip_address
   validates_uniqueness_of :ip_address
-  validates_uniqueness_of :mac_address
+  #validates_uniqueness_of :mac_address
 
-	#has_many    :users, :through => :organization
-	#has_many    :domains, :through => :organization
-  #has_many    :applications, :through => service
-  #has_many     :web_applications, :through => service
+#	has_many    :users, :through => :organization
+	#has_many    :applications, :through => service
+  #has_many    :web_applications, :through => service
 
 	include ModelHelper
 
