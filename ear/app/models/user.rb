@@ -2,11 +2,9 @@ require File.dirname(__FILE__) + '/model_helper'
 
 class User < ActiveRecord::Base
 	has_many :object_mappings
-	#after_create :after_create
 
 	belongs_to :organization
-
-  #validates_presence_of :fname, :lname
+	has_one :location
 
 	include ModelHelper
 

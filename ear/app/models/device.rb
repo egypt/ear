@@ -3,7 +3,6 @@ require 'iconv'
 
 class Device < ActiveRecord::Base
 	has_many :object_mappings
-	#after_create :after_create
 
 	belongs_to  :organization
 	has_one     :location

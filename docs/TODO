@@ -1,0 +1,42 @@
+whois - WIP
+reverse_lookup - done
+srv_record_lookup - TODO
+forward_lookup - done
+tld_brute - done
+sub_brute - done
+srv_brute - TODO
+google_filetype_search - TODO 
+geolocate - done
+edgar_search - TODO
+namechk - TODO
+find_vhosts - TODO
+shodan_search - TODO
+email_harvester - TODO
+virtual_identity_creator - TODO
+netcraft - TODO
+
+SITES
+ - pipl
+ - spoke
+ - spokeo
+ - xing
+ - 123people
+ - namechk 
+ - friendscall.me
+ - tweepz
+ - tweepsearch
+
+INVESTIGATE
+ - foca_metadata_extract - TODO
+ - metagoofil
+ - cree.py
+ - waf stuff (ping j0e)
+
+Active
+ - nmap - WIP
+ - msf wrapper - TODO
+ - msf pro wrapper - TODO
+ - banner_grab - TODO 
+ - smtp_bounce_back - TODO
+ - check_waf - TODO
+ - web_spider - TODO

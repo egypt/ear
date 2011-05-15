@@ -33,40 +33,28 @@ require 'rex'
 	## Default method, subclasses must override this
 	def run
 		begin
+			
 			if @object.kind_of?(Device)
-				answer = @client.query(@object.ip)
-				split_answer = answer.to_s.split("\n")			
-				
-				split_answer.each { |line|
+				answer = @client.query(@object.ip_address)
+			elsif @object.kind_of?(User)
+			elsif @object.kind_of?(Organization)
+			  
+			  answer = @client.query(@object.name)
+			  answer.contacts.each do |contact|
+          l = create_object Location, :address => contact.address,
+                                      :state => contact.state,
+                                      :city => contact.city,
+                                      :zip => contact.zip,
+                                      :country => contact.country
 
-					## Attach Netrange
-					if line =~ /CIDR/
-						cidr = line
-						#n = Network.create(:range => cidr.split(" ").last)
-						#n.add_fact("Created from a whois lookup on: " + @object.ip + "(" + cidr + ")")	
-						
-            walker = Rex::Socket::RangeWalker.new(line)
-        		walker.each { |ip| Device.create(:ip_address => ip)}
-					  
-					end
-				
-					## Attach Nameserver
-					if line =~ /NameServer/
-						nameserver = line
-						h = Device.create(:name => nameserver.split(" ").last)
-						#h.add_fact("Created from a whois lookup on: " + @object.ip + "(" + nameserver + ")")	
-						h.lookup
-					end
-
-				## Attach Domain
-				
-				## Attach Contact
-				
-				## Organization
-				
-				}
-
-		elsif @object.kind_of?(Domain)
+			    create_object User, :full_name => contact.name,
+			                        :email => contact.email,
+			                        :phone => contact.phone,
+			                        :fax => contact.fax,
+			                        :location_id => l.id
+			  end
+			  
+		  elsif @object.kind_of?(Domain)
 				begin
 					answer = @client.query(@object.domain)
 				rescue 
@@ -91,6 +79,7 @@ require 'rex'
 				@object.technical_contact = answer.techncial_contact
 			end
 		rescue Exception => e
+			puts "Something bad happened. Probably unable to parse the response :("
 			puts e.to_s
 		end
 		
