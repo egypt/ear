@@ -5,6 +5,7 @@ gem install pcaprub
 gem install packetfu
 gem install nmap-parser
 gem install rex
+gem install searchlogic
 
 ## there may be additional dependencies. add as you find'm
 
