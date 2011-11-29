@@ -1,0 +1,3 @@
+ear/config/database.yml
+ear/log/*
+*.swp
