@@ -13,4 +13,8 @@ class User < ActiveRecord::Base
 	  "#{self.class}: #{self.lname}, #{self.fname}"
 	end
 
+	def full_name
+		"#{fname} #{lname}"
+	end
+
 end
