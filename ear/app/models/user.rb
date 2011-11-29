@@ -2,6 +2,7 @@ require File.dirname(__FILE__) + '/model_helper'
 
 class User < ActiveRecord::Base
 	has_many :object_mappings
+	has_many :email_addresses
 
 	belongs_to :organization
 	has_one :location
